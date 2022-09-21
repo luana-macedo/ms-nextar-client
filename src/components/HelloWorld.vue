@@ -1,8 +1,19 @@
 <template>
 <div class="container text-center  mt-5 mb-5">
   <h1 class="mt-5 fw-bolder text-success "> User's Database </h1>
-   <div class="table-responsive my-5">
-
+   <div class="table-responsive my-5 h-64">
+    <button
+                type="submit"
+                class="
+                  inline-flex
+                  justify-center
+                  py-2
+                  px-4
+                "
+                @click="create()"
+              >
+                Create user
+              </button>
     <!-- The table component -->
      <Table :fields='fields' :studentData ="users"></Table>
    </div>
@@ -43,7 +54,7 @@ setup(){
   const fields = [
     'name','email','permissions','phone'
   ]
-  return{users,fields}
+  return{users,fields, create}
 },
 }
 </script>
