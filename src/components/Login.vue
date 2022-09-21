@@ -36,11 +36,13 @@
  import { defineComponent, onMounted } from 'vue';
   import api from '@/services/api.ts';
   import setAuthHeader from '../utils/setAuthHeader';
+  import { useRouter } from 'vue-router';
   
   export default defineComponent({
   name: 'Login',
 
   setup() {
+    const router = useRouter();
     const form = {
         email: '',
         password: ''
@@ -52,7 +54,7 @@
         .then(response => {
             localStorage.setItem("jwtToken", response.data.access_token);
             setAuthHeader(response.data.access_token)
-            this.$router.push({ name: 'home' })
+            router.push({ name: 'home' })
         })
         .catch((err) => console.log(err.response));
 

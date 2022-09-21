@@ -14,18 +14,30 @@
 import Table from '@/components/Table.vue'
 import api from '@/services/api.ts';
 import { onMounted, ref } from 'vue';
+import { useRouter } from 'vue-router';
+
 export default {
 name: 'HelloWorld',
 components: {
   Table
 },
 setup(){
+  const router = useRouter();
   const users = ref([]);
   const fetch = () =>
         api
-        .get("/users")
+        .get("/users", {
+            headers: {
+            'Authorization': `Bearer ${window.localStorage.getItem("jwtToken")}`
+            }
+        })
         .then((response) => (users.value = 
-        response.data));
+        response.data))
+        .catch((err) => {
+             if (err.response && (err.response.status === 401 || err.response.status === 403) ) {
+              router.push({ name: 'login' })
+             }
+          });
     
     onMounted(fetch);
   const fields = [
